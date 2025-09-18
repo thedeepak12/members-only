@@ -1,10 +1,13 @@
 {
   "name": "members-only",
   "version": "1.0.0",
+  "type": "module",
   "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ts": "tsc",
+    "build": "npm run build:ts && npm run copy:assets",
+    "copy:assets": "copyfiles -u 1 \"src/**/*.ejs\" \"public/**/*\" \"db/**/*.sql\" dist",
     "watch:ts": "tsc --watch",
     "build:css": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css",
     "watch:css": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
@@ -36,6 +39,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-local": "^1.0.38",
     "@types/pg": "^8.15.5",
+    "copyfiles": "^2.4.1",
     "typescript": "^5.9.2"
   }
 }
