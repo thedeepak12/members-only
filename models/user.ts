@@ -24,6 +24,22 @@ export async function findByEmailOrUsername(email: string, username: string): Pr
   return rows[0] ?? null;
 }
 
+export async function findByUsername(username: string): Promise<UserRow | null> {
+  const { rows } = await pool.query<UserRow>(
+    'SELECT * FROM users WHERE username = $1 LIMIT 1',
+    [username]
+  );
+  return rows[0] ?? null;
+}
+
+export async function findById(id: number): Promise<UserRow | null> {
+  const { rows } = await pool.query<UserRow>(
+    'SELECT * FROM users WHERE id = $1 LIMIT 1',
+    [id]
+  );
+  return rows[0] ?? null;
+}
+
 export async function createUser(data: NewUser): Promise<UserRow> {
   const { rows } = await pool.query<UserRow>(
     `INSERT INTO users (name, username, email, password_hash)

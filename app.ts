@@ -2,6 +2,8 @@ import express, { type Request, type Response } from 'express';
 import dotenv from 'dotenv';
 import './config/database.js';
 import authRoutes from './routes/authRoutes.js';
+import session from 'express-session';
+import passport from './config/passport.js';
 
 dotenv.config();
 
@@ -11,6 +13,21 @@ const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+
+const sessionSecret = process.env.SESSION_SECRET;
+if (!sessionSecret) {
+  throw new Error('SESSION_SECRET is not set in the environment');
+}
+
+app.use(
+  session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(authRoutes);
 
