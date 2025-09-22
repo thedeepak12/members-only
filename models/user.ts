@@ -52,3 +52,7 @@ export async function createUser(data: NewUser): Promise<UserRow> {
   }
   return rows[0];
 }
+
+export async function setMembershipStatus(userId: number, isMember: boolean): Promise<void> {
+  await pool.query('UPDATE users SET is_member = $1 WHERE id = $2', [isMember, userId]);
+}

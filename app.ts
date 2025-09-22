@@ -2,6 +2,7 @@ import express, { type Request, type Response } from 'express';
 import dotenv from 'dotenv';
 import './config/database.js';
 import authRoutes from './routes/authRoutes.js';
+import membershipRoutes from './routes/membershipRoutes.js';
 import session from 'express-session';
 import passport from './config/passport.js';
 
@@ -30,6 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(authRoutes);
+app.use(membershipRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.render('layouts/main', {});

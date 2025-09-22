@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/output.css">
+  <title>Membership</title>
+</head>
+<body class="bg-gray-900">
+  <div class="bg-gray-900 flex flex-col items-center justify-start min-h-screen px-4 pt-10">
+    <div class="bg-gray-800 text-white border-[1px] border-gray-700 shadow-lg w-full sm:w-auto p-6 sm:p-8 rounded-lg">
+      <h1 class="text-center text-2xl font-bold mb-6">Enter Membership Code</h1>
+      <form class="flex flex-col gap-4 w-full sm:w-[400px]" action="/membership" method="POST">
+        <div class="flex flex-col gap-1">
+          <label for="code">Code</label>
+          <input class="p-2 border rounded" type="text" id="code" name="code" placeholder="Enter code" required>
+        </div>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <p class="text-sm text-red-600 mt-1"><%= error %></p>
+        <% } %>
+        <button class="bg-blue-600 text-white p-2 cursor-pointer rounded hover:bg-blue-700 transition-colors" type="submit">
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
