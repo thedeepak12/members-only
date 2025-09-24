@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import './config/database.js';
 import authRoutes from './routes/authRoutes.js';
 import membershipRoutes from './routes/membershipRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
 import session from 'express-session';
 import passport from './config/passport.js';
 
@@ -13,6 +14,7 @@ const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use('/utils', express.static('dist/utils'));
 app.use(express.urlencoded({ extended: true }));
 
 const sessionSecret = process.env.SESSION_SECRET;
@@ -32,6 +34,7 @@ app.use(passport.session());
 
 app.use(authRoutes);
 app.use(membershipRoutes);
+app.use(messageRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.render('layouts/main', {});
