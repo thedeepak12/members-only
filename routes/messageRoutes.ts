@@ -4,9 +4,10 @@ import { listMessages, createMessage } from '../models/message.js';
 
 const router = Router();
 
-router.get('/messages', async (_req: Request, res: Response) => {
+router.get('/messages', isAuthenticated, async (req: Request, res: Response) => {
   const messages = await listMessages();
-  res.render('messages/messageList', { title: 'Messages', messages });
+  const isMember = Boolean((req as any)?.user?.is_member);
+  res.render('layouts/main', { title: 'Messages', messages, isMember });
 });
 
 router.post('/messages', isAuthenticated, async (req: Request, res: Response) => {

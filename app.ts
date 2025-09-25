@@ -6,6 +6,7 @@ import membershipRoutes from './routes/membershipRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 import session from 'express-session';
 import passport from './config/passport.js';
+import { listMessages } from './models/message.js';
 
 dotenv.config();
 
@@ -36,8 +37,14 @@ app.use(authRoutes);
 app.use(membershipRoutes);
 app.use(messageRoutes);
 
-app.get('/', (_req: Request, res: Response) => {
-  res.render('layouts/main', {});
+app.get('/', async (req: Request, res: Response) => {
+  const isAuthed = typeof (req as any).isAuthenticated === 'function' && (req as any).isAuthenticated();
+  if (!isAuthed) {
+    return res.redirect('/login');
+  }
+  const messages = await listMessages();
+  const isMember = Boolean((req as any)?.user?.is_member);
+  res.render('layouts/main', { title: 'Messages', messages, isMember });
 });
 
 app.get('/signup', (_req: Request, res: Response) => {

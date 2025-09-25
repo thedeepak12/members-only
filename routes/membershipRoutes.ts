@@ -4,7 +4,7 @@ import { setMembershipStatus } from '../models/user.js';
 
 const router = Router();
 
-router.get('/membership', isAuthenticated, (req: Request, res: Response) => {
+router.get('/membership', isAuthenticated, (_req: Request, res: Response) => {
   res.render('auth/membership', { title: 'Membership' });
 });
 

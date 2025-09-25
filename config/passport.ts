@@ -30,7 +30,7 @@ passport.deserializeUser(async (id: number, done) => {
   try {
     const user = await findById(id);
     if (!user) return done(null, false);
-    return done(null, { id: user.id, username: user.username });
+    return done(null, { id: user.id, username: user.username, is_member: user.is_member });
   } catch (err) {
     return done(err as Error);
   }
