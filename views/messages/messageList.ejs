@@ -11,7 +11,12 @@
      <% messages.forEach((message) => { %>
        <div class="bg-gray-800 p-4 rounded shadow-2xl">
          <div class="flex items-center justify-between text-xs text-gray-400">
-           <span class="text-gray-100 font-semibold text-base sm:text-lg"><%= message.name %></span>
+           <span class="text-gray-100 font-semibold text-base sm:text-lg">
+             <%= isMember ? message.name : 'Anonymous' %>
+             <% if (isMember && message.user_id === 1) { %>
+               <span class="text-green-400 text-xs font-semibold ml-1">Admin</span>
+             <% } %>
+           </span>
            <span><%= new Date(message.created_at).toISOString().replace('T',' ').slice(0,16) %> UTC</span>
          </div>
          <p class="text-gray-200 mt-2"><%= message.content %></p>
@@ -33,3 +38,4 @@
      </form>
    </div>
  </div>
+
